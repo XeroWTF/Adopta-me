@@ -1,5 +1,6 @@
 
-const { conn } = require('./src/db'); // importar conn
+const { conn, User } = require('./src/db');
+
 
 conn.sync() // ahora conn está definido!
   .then(() => {
