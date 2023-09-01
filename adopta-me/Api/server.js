@@ -6,15 +6,15 @@ app.use(express.json());
 
 // Importar tus modelos
 const sequelize = require('./src/db');
-require('./src/Models/Animal')(sequelize);
-require('./src/Models/User')(sequelize);
+require('./src/models/Animal')(sequelize);
+require('./src/models/User')(sequelize);
 
 // Definir tus rutas aquí
 
 
 
-const animalRoutes = require('./src/Routes/animalRoutes');
-const userRoutes = require('./src/Routes/userRoutes');
+const animalRoutes = require('./src/routes/animalRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 
 app.use('/api/animals', animalRoutes);
 app.use('/api/users', userRoutes);
