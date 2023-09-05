@@ -1,79 +1,92 @@
-const { Animal } = require('../db');
 
-// Obtener todos los animales
+const { Animal } = require('../db');
+const { ValidationError } = require('sequelize');
+
 async function getAllAnimals(req, res) {
   try {
     const animals = await Animal.findAll();
-    res.json(animals);
+    res.json(animals); 
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener los animales.' });
+    res.status(500).json({ message: 'Error al obtener los animales' }); 
   }
 }
 
-// Crear un nuevo animal
 async function createAnimal(req, res) {
-  const { name, picture } = req.body;
+
+  const { name, picture } = req.body;  
 
   try {
     const newAnimal = await Animal.create({ name, picture });
     res.status(201).json(newAnimal);
+
   } catch (error) {
-    res.status(500).json({ error: 'Error al crear el animal.' });
+
+    if (error instanceof ValidationError) {
+      return res.status(400).json({ message: error.message });
+    }
+
+    res.status(500).json({ message: 'Error al crear el animal' });
+  
   }
+
 }
 
-// Obtener un animal por su ID
 async function getAnimalById(req, res) {
-  const animalId = req.params.id;
+  
+  const { id } = req.params;
 
   try {
-    const animal = await Animal.findByPk(animalId);
+    const animal = await Animal.findByPk(id);
     if (!animal) {
-      return res.status(404).json({ error: 'Animal no encontrado.' });
+      return res.status(404).json({ message: 'Animal no encontrado' });
     }
     res.json(animal);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener el animal.' });
+    res.status(500).json({ message: 'Error al obtener el animal' });
   }
+
 }
 
-// Actualizar un animal
 async function updateAnimal(req, res) {
-  const animalId = req.params.id;
+
+  const { id } = req.params;  
   const { name, picture } = req.body;
 
   try {
-    const animal = await Animal.findByPk(animalId);
+    const animal = await Animal.findByPk(id);
     if (!animal) {
-      return res.status(404).json({ error: 'Animal no encontrado.' });
+      return res.status(404).json({ message: 'Animal no encontrado' });
     }
     await animal.update({ name, picture });
     res.json(animal);
   } catch (error) {
-    res.status(500).json({ error: 'Error al actualizar el animal.' });
+    res.status(500).json({ message: 'Error al actualizar el animal' }); 
   }
+
 }
 
-// Eliminar un animal
 async function deleteAnimal(req, res) {
-  const animalId = req.params.id;
+
+  const { id } = req.params;
 
   try {
-    const animal = await Animal.findByPk(animalId);
+    const animal = await Animal.findByPk(id);
     if (!animal) {
-      return res.status(404).json({ error: 'Animal no encontrado.' });
-    }
+      return res.status(404).json({ message: 'Animal no encontrado' });
+    }  
     await animal.destroy();
-    res.json({ message: 'Animal eliminado correctamente.' });
+    res.sendStatus(204);
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar el animal.' });
+    res.status(500).json({ message: 'Error al eliminar el animal' });
   }
+
 }
+
 
 module.exports = {
   getAllAnimals,
-  createAnimal,
+  createAnimal, 
   getAnimalById,
   updateAnimal,
-  deleteAnimal,
-};
+  deleteAnimal
+}
