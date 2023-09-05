@@ -1,4 +1,5 @@
 import './Home.css';
+import PetCard from '../Components/PetCard';
 
 function Home() {
   return (
@@ -10,7 +11,7 @@ function Home() {
       <main>
         <h2>Nuestros peludos en adopción</h2>
         
-        {/* Aquí irían las tarjetas de los perros */}
+        <PetCard/>
         
         <button>Conoce a más amigos</button>
       </main>
