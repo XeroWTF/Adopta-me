@@ -1,26 +1,29 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000; // Puedes cambiar el puerto si lo deseas
+// Requerir archivo de configuración de la DB
+require('./src/db');
 
+// Requerir express  
+const express = require('express');
+
+// Inicializar express
+const app = express();
+
+// Configurar middlewares
 app.use(express.json());
 
-// Importar tus modelos
-const sequelize = require('./src/db');
-require('./src/models/Animal')(sequelize);
-require('./src/models/User')(sequelize);
+// Requerir modelos para registrarlos
+require('./src/models/Animal');
+require('./src/models/User');
 
-// Definir tus rutas aquí
-
-
-
+// Requerir rutas
 const animalRoutes = require('./src/routes/animalRoutes');
-const userRoutes = require('./src/routes/userRoutes');
+const userRoutes = require('./src/routes/userRoutes'); 
 
+// Usar rutas 
 app.use('/api/animals', animalRoutes);
 app.use('/api/users', userRoutes);
 
-
-
-app.listen(port, () => {
-  console.log(`Servidor en funcionamiento en el puerto ${port}`);
+// Escuchar peticiones en el puerto deseado
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`); 
 });
