@@ -1,28 +1,59 @@
-// db.js
+require('dotenv').config()
+const { Sequelize } = require('sequelize')
 
-require('dotenv').config();
+// lectura automatica de modelos
+const fs = require('fs')
+const path = require('path')
 
-const { Sequelize } = require('sequelize');
+// se traen las credenciales
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env
 
+// sequelize + SQL
 const sequelize = new Sequelize(
-  `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`
-);
+  `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  }
+)
 
-// Importar modelos
-const User = require('./models/User'); 
-const Animal = require('./models/Animal');
+const basename = path.basename(__filename)
+const modelDefiners = []
 
-// Relaciones
+// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
+fs.readdirSync(path.join(__dirname, '/models'))
+  .filter(
+    (file) =>
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+  )
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, '/models', file)))
+  })
+
+// Injectamos la conexion (sequelize) a todos los modelos
+modelDefiners.forEach((model) => model(sequelize))
+// Capitalizamos los nombres de los modelos ie: product => Product
+let entries = Object.entries(sequelize.models)
+let capsEntries = entries.map((entry) => [
+  entry[0][0].toUpperCase() + entry[0].slice(1),
+  entry[1],
+])
+sequelize.models = Object.fromEntries(capsEntries)
+
+// En sequelize.models están todos los modelos importados como propiedades
+// Para relacionarlos hacemos un destructuring
+const {
+  Animal,
+  User,
+} = sequelize.models
+
+// Aca vendrian las relaciones
+// Product.hasMany(Reviews);
+
 User.hasMany(Animal);
 Animal.belongsTo(User);
 
-// Sincronización 
-sequelize.sync()
-  .then(() => console.log('Tablas sincronizadas'))
-  .catch(error => console.error('Error al sincronizar:', error))
-
-// Inyectar la conexión  
-User.initialize(sequelize);
-Animal.initialize(sequelize);
-
-module.exports = sequelize;
+module.exports = {
+  ...sequelize.models,
+  conn: sequelize,
+}

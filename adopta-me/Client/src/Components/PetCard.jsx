@@ -7,3 +7,4 @@ function PetCard() {
 }
 
 export default PetCard;
+
