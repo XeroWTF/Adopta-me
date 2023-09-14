@@ -1,4 +1,4 @@
-const { conn } = require('./src/db.js')
+const { conn } = require('./src/db.js');
 
 // Requerir app.js
 const app = require('./src/app');
@@ -6,13 +6,11 @@ const app = require('./src/app');
 // Obtener referencia al servidor
 const server = app.server;
 
-const PORT = process.env.DB_PORT || 3001
+const PORT = 3000; // Cambia 3000 al puerto que desees utilizar
 
 conn.sync({ force: false }).then(() => {
-
-  // Llamar listen en la referencia al servidor 
+  // Llamar listen en la referencia al servidor
   server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server is running on https://localhost:${PORT}`)
-  })
-
-})
+    console.log(`Server is running on https://localhost:${PORT}`);
+  });
+});
