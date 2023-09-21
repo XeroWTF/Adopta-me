@@ -1,6 +1,7 @@
 // AnimalForm.jsx
 
 import { useState } from 'react';
+import "./AnimalForm.css";
 
 function AnimalForm() {
 
