@@ -3,28 +3,29 @@
 .pet-card {
     width: 180px;
     height: 280px;  
-    background-color: rgba(101, 67, 33, 0.7);
-    border: 1px solid black;
+    background-color: rgba(101, 67, 33, 0.388);
+    border: 3px solid black;
     border-radius: 10px;
     padding: 10px;
   }
   
   .pet-card img {
-    width: 160px;
-    height: 160px;
-    border: 1px solid black;
-    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 5px;
   }
   
   .pet-card h3 {
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
   
   .pet-card button {
     background-color: #333;
     color: white;
-    border: none;
+    border: 1px solid black;
     border-radius: 5px;
     padding: 5px 10px;
   }

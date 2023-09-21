@@ -1,4 +1,5 @@
 
+const { log } = require('handlebars/runtime');
 const { Animal } = require('../db');
 const { ValidationError } = require('sequelize');
 
@@ -13,10 +14,12 @@ async function getAllAnimals(req, res) {
 
 async function createAnimal(req, res) {
 
-  const { name, picture } = req.body;  
+  console.log(req.body);
+
+  const { name, picture, province, description } = req.body;  
 
   try {
-    const newAnimal = await Animal.create({ name, picture });
+    const newAnimal = await Animal.create({ name, picture, province, description });
     res.status(201).json(newAnimal);
 
   } catch (error) {

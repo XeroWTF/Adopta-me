@@ -26,6 +26,7 @@ function Home() {
         <PetCard 
           key={animal.id}
           name={animal.name}
+          description={animal.description}
           picture={animal.picture}  
         />
       ))}
