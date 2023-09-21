@@ -1,7 +1,19 @@
+// Home.jsx
+
 import './Home.css';
 import PetCard from '../Components/PetCard';
+import { useState, useEffect } from 'react';
 
 function Home() {
+
+  const [animals, setAnimals] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/animal')
+      .then(res => res.json())
+      .then(data => setAnimals(data))
+  }, []);
+
   return (
     <div className="home">
       <header>
@@ -9,12 +21,16 @@ function Home() {
       </header>
 
       <main>
-        <h2>Nuestros peludos en adopción</h2>
-        
-        <PetCard/>
-        
-        <button>Conoce a más amigos</button>
-      </main>
+    <div className="pet-cards">
+      {animals.map(animal => (
+        <PetCard 
+          key={animal.id}
+          name={animal.name}
+          picture={animal.picture}  
+        />
+      ))}
+    </div>
+  </main>
 
       <footer>
         <p>Copyright Adopta-me</p>  
