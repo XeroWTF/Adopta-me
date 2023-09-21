@@ -2,6 +2,7 @@
 
 import './Home.css';
 import PetCard from '../Components/PetCard';
+import AnimalForm from '../Components/AnimalForm';
 import { useState, useEffect } from 'react';
 
 function Home() {
@@ -30,6 +31,10 @@ function Home() {
           picture={animal.picture}  
         />
       ))}
+    </div>
+
+    <div>
+      <AnimalForm/>
     </div>
   </main>
 
