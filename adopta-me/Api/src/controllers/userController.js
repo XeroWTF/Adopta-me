@@ -13,6 +13,8 @@ async function getAllUsers(req, res) {
 
 async function createUser(req, res) {
 
+  console.log("Este es el controlador:", req.body);
+
   const { name, email, nickname, picture } = req.body;
 
   try {

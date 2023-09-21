@@ -11,24 +11,29 @@ const {
 
 userRouter.get('/', async (req, res) => {
     try {
-        const users = await getAllUsers()
-
-        res.status(200).json(users)
+      console.log('Obteniendo todos los usuarios');  
+      const users = await getAllUsers(req, res);
+      console.log('Usuarios obtenidos');
+      res.status(200).json(users);
     } catch (error) {
-        res.status(404).send(error.message)
+      console.log('Error al obtener usuarios', error);
+      res.status(500).json({ mensaje: 'Error al obtener los usuarios' }); 
     }
-})
+  });
 
 
-userRouter.post('/', async (req, res) => {
+  userRouter.post('/', async (req, res) => {
     try {
-        const newuser = await createUser()
-
-        res.status(200).json(newuser)
+      console.log('Creando nuevo usuario');
+      console.log("Esta es la ruta:", req.headers, req.body);
+      const newUser = await createUser(req, res); 
+      console.log('Usuario creado'); 
+      res.status(201).json(newUser);
     } catch (error) {
-        res.status(404).send(error.message)
+      console.log('Error al crear usuario', error);
+      res.status(500).json({ mensaje: 'Error al crear el usuario'});
     }
-})
+  });
 
 
 
