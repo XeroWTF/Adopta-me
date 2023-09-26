@@ -1,53 +1,60 @@
 // AnimalForm.jsx
 
-import { useState } from 'react';
 import "./AnimalForm.css";
+import { useState } from 'react';  
+import { useAuth0 } from '@auth0/auth0-react';
 
 function AnimalForm() {
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState({  
     name: '',
     picture: '',
     province: '',
     description: ''
   });
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
-  }
+  const { getAccessTokenSilently } = useAuth0();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/animal', {
+      const token = await getAccessTokenSilently();
+
+      const res = await fetch('http://localhost:3000/animal', {
         method: 'POST',
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(form)
       });
-
-      if(response.ok) {
+      
+      if (res.ok) {
         alert('Animal creado!');
-        setForm({
+        setForm({  
           name: '',
           picture: '',
           province: '',
-          description: ''
+          description: '' 
         });
       }
 
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
-
   }
 
+  const handleChange = (e) => {
+    setForm({  
+      ...form,
+      [e.target.name]: e.target.value 
+    });
+  } 
+
   return (
+
+
     <form onSubmit={handleSubmit}>
       <input 
         type="text"
@@ -55,7 +62,7 @@ function AnimalForm() {
         value={form.name}
         onChange={handleChange} 
         placeholder="Nombre"
-      />
+        />
 
       <input
         type="text"
@@ -69,7 +76,7 @@ function AnimalForm() {
         name="province"
         value={form.province}
         onChange={handleChange}
-      >
+        >
         <option value="">Seleccionar provincia</option>
         <option value="Buenos Aires">Buenos Aires</option>
         <option value="Catamarca">Catamarca</option>
@@ -103,10 +110,11 @@ function AnimalForm() {
         value={form.description}
         onChange={handleChange}
         placeholder="Descripción"
-      />
+        />
 
       <button type="submit">Crear Animal</button>
     </form>
+      
   );
 
 }

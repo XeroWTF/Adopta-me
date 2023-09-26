@@ -1,48 +1,68 @@
 // Home.jsx
 
 import './Home.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useState, useEffect } from 'react';
 import PetCard from '../Components/PetCard';
 import AnimalForm from '../Components/AnimalForm';
-import { useState, useEffect } from 'react';
 
 function Home() {
 
   const [animals, setAnimals] = useState([]);
+  
+  const { 
+    isAuthenticated,
+    loginWithRedirect,
+    logout 
+  } = useAuth0();
 
   useEffect(() => {
-    fetch('http://localhost:3000/animal')
-      .then(res => res.json())
-      .then(data => setAnimals(data))
-  }, []);
+    if (isAuthenticated) {
+      fetchAnimals();
+    }
+  }, [isAuthenticated]);
+
+  const fetchAnimals = async () => {
+    const res = await fetch('/animals');
+    const data = await res.json();
+    setAnimals(data);
+  };
 
   return (
     <div className="home">
+
       <header>
-        <h1>Adopta un amigo peludo</h1>
+        {!isAuthenticated && (
+          <button onClick={loginWithRedirect}>Log In</button>
+        )}
+
+        {isAuthenticated && (
+          <>
+            <button onClick={logout}>Log Out</button>
+            <h1>Adopta un amigo peludo</h1>  
+          </>
+        )}
       </header>
 
       <main>
-    <div className="pet-cards">
-      {animals.map(animal => (
-        <PetCard 
-          key={animal.id}
-          name={animal.name}
-          description={animal.description}
-          picture={animal.picture}  
-        />
-      ))}
-    </div>
-
-    <div>
-      <AnimalForm/>
-    </div>
-  </main>
+        {isAuthenticated ? (
+          <>
+            {/* Mostrar tarjetas y formulario */}
+            <PetCard animals={animals} />
+            <AnimalForm />
+          </>
+        ) : (
+          <p>Necesitas iniciar sesión para ver esta sección</p>
+        )}
+      </main>
 
       <footer>
-        <p>Copyright Adopta-me</p>  
+        <p>Copyright Adopta-me</p>
       </footer>
+
     </div>
   );
+
 }
 
 export default Home;
