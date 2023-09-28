@@ -5,16 +5,15 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 import PetCard from '../Components/PetCard';
 import AnimalForm from '../Components/AnimalForm';
+import LoginButton from '../Components/LoginButton'; 
+import LogoutButton from '../Components/LogoutButton';
 
 function Home() {
 
   const [animals, setAnimals] = useState([]);
+
   
-  const { 
-    isAuthenticated,
-    loginWithRedirect,
-    logout 
-  } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -33,12 +32,12 @@ function Home() {
 
       <header>
         {!isAuthenticated && (
-          <button onClick={loginWithRedirect}>Log In</button>
+          <LoginButton />
         )}
 
         {isAuthenticated && (
           <>
-            <button onClick={logout}>Log Out</button>
+            <LogoutButton />
             <h1>Adopta un amigo peludo</h1>  
           </>
         )}
