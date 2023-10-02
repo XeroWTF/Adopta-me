@@ -6,7 +6,7 @@ const app = require('./src/app');
 // Obtener referencia al servidor
 const server = app.server;
 
-const PORT = 3000; // Cambia 3000 al puerto que desees utilizar
+const PORT = 3001; // Cambia 3000 al puerto que desees utilizar
 
 conn.sync({ force: false }).then(() => {
   // Llamar listen en la referencia al servidor
