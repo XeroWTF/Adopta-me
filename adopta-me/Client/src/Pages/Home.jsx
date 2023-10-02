@@ -4,7 +4,6 @@ import './Home.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 import PetCard from '../Components/PetCard';
-import AnimalForm from '../Components/AnimalForm';
 import LoginButton from '../Components/LoginButton'; 
 import LogoutButton from '../Components/LogoutButton';
 
@@ -46,8 +45,9 @@ function Home() {
       <main>
         {isAuthenticated ? (
           <>
-            <PetCard animals={animals} />
-            <AnimalForm />
+
+            <PetCard animals={animals} />         
+
           </>
         ) : (
           <p>Necesitas iniciar sesión para ver esta sección</p>
