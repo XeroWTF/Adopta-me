@@ -46,7 +46,6 @@ function Home() {
       <main>
         {isAuthenticated ? (
           <>
-            {/* Mostrar tarjetas y formulario */}
             <PetCard animals={animals} />
             <AnimalForm />
           </>

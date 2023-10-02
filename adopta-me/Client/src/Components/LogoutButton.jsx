@@ -4,12 +4,8 @@ const LogoutButton = () => {
 
   const { logout } = useAuth0();
 
-  const handleLogout = () => {
-    logout({ returnTo: '/' });
-  }
-
   return (
-    <button onClick={handleLogout}>Cerrar Sesión</button>
+    <button onClick={logout}>Cerrar Sesión</button>
   )
 
 }
