@@ -1,9 +1,13 @@
 import React from "react";
 import AnimalForm from "../Components/AnimalForm";
 
-export const AddForm = () => {
+const AddForm = () => {
 
-    return <div>
+    return (
+    <div className="addForm">
         <AnimalForm />
     </div>
+    )
 }
+
+export default AddForm;

@@ -1,17 +1,13 @@
-// Home.jsx
-
 import './Home.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 import PetCard from '../Components/PetCard';
+import AnimalForm from '../Components/AnimalForm';
 import LoginButton from '../Components/LoginButton'; 
 import LogoutButton from '../Components/LogoutButton';
 
-function Home() {
-
+const Home = () => {
   const [animals, setAnimals] = useState([]);
-
-  
   const { isAuthenticated } = useAuth0();
 
   useEffect(() => {
@@ -28,7 +24,6 @@ function Home() {
 
   return (
     <div className="home">
-
       <header>
         {!isAuthenticated && (
           <LoginButton />
@@ -45,9 +40,7 @@ function Home() {
       <main>
         {isAuthenticated ? (
           <>
-
             <PetCard animals={animals} />         
-
           </>
         ) : (
           <p>Necesitas iniciar sesión para ver esta sección</p>
@@ -57,10 +50,8 @@ function Home() {
       <footer>
         <p>Copyright Adopta-me</p>
       </footer>
-
     </div>
   );
-
 }
 
 export default Home;
