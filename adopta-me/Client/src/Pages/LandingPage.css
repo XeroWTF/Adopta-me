@@ -1,0 +1,42 @@
+.landing-page {
+    display: flex;
+    justify-content: center; /* Centramos horizontalmente */
+    align-items: center; /* Centramos verticalmente */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-image: url('../Assets/BosqueLanding.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .content {
+    text-align: center; /* Centramos el texto */
+  }
+  
+  .content h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .button-container {
+    margin-top: 20px; /* Agregamos un margen arriba para separar del texto */
+  }
+  
+  .enter-button {
+    font-size: 24px;
+    padding: 15px 30px;
+    font-weight: bold;
+    border: 2px solid #980b0b5f;
+    border-radius: 30px;
+    color: #000000;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .enter-button:hover {
+    background-color: #980b0b5f;
+    color: #ffffff;
+  }
+  
