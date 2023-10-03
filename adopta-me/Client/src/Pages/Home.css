@@ -1,41 +1,101 @@
-
 .home {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .home header {
-    background-color: #f1f1f1;
-    padding: 20px;
-  }
-  
-  .home footer {
-    margin-top: auto;
-    background-color: #f1f1f1;
-    padding: 20px;
-  }
+  background-image: url('../Assets/HomePageBackGround.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  .home main {
-    margin-top: 15px ;
-  }
-  
-/* Home.css */
+.header {
+  align-self: flex-end;
+  padding: 20px;
+}
 
-.pet-cards {
-  display: flex; 
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.main h1 {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.pet-cards-container {
+  display: flex;
   flex-wrap: wrap;
-  justify-content:center;
+  gap: 20px;
+  padding: 20px;
+  justify-content: flex-start;
 }
 
 .pet-card {
-  margin-bottom: 10px;
-  margin-right: 1cm ; 
+  width: calc(25% - 20px); /* Máximo de 4 por fila */
 }
 
-@media (min-width: 600px) {
-  .pet-card {
-    width: calc(25% - 1rem);
-  }
+.footer {
+  text-align: center;
+  padding: 20px;
 }
+
+.enter-button {
+  font-size: 18px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: 2px solid #980b0b5f;
+  border-radius: 30px;
+  color: #000000;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.enter-button:hover {
+  background-color: #980b0b5f;
+  color: #ffffff;
+}
+
+
+/* Resto de estilos existentes */
+
+.main-title {
+  font-size: 24px; /* Reducimos el tamaño del texto */
+  font-weight: bold;
+  color: white;
+}
+
+.footer {
+  text-align: center;
+  padding: 0.1px; /* Reducimos el padding */
+  font-size: 12px; /* Reducimos el tamaño del texto del footer */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.pet-card {
+  width: 80%; /* Ajusta según sea necesario para que se vean bien en el carrusel */
+  margin: 0 auto; /* Centra las tarjetas de mascotas */
+}
+
+/* Ajustes para el carrusel */
+.slick-slider {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.slick-slide img {
+  width: 100%;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #000000;
+}
+
