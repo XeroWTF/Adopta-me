@@ -1,0 +1,60 @@
+{
+    "petFakeData": [
+      {
+        "id": 1,
+        "name": "Luna",
+        "province": "Buenos Aires",
+        "description": "Luna es una encantadora perrita en busca de un hogar amoroso.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 2,
+        "name": "Max",
+        "province": "Córdoba",
+        "description": "Max es un alegre gatito en busca de un compañero de juegos.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 3,
+        "name": "Bella",
+        "province": "Santa Fe",
+        "description": "Bella es una perrita muy cariñosa en busca de cariño y atención.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 4,
+        "name": "Simba",
+        "province": "Mendoza",
+        "description": "Simba es un gato juguetón en busca de un hogar lleno de diversión.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 5,
+        "name": "Rocky",
+        "province": "Salta",
+        "description": "Rocky es un perrito activo en busca de un dueño activo.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 6,
+        "name": "Lola",
+        "province": "Tucumán",
+        "description": "Lola es una perrita juguetona en busca de amor y cariño.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 7,
+        "name": "Tom",
+        "province": "Neuquén",
+        "description": "Tom es un gato travieso en busca de un compañero de travesuras.",
+        "picture": "https://via.placeholder.com/150"
+      },
+      {
+        "id": 8,
+        "name": "Mia",
+        "province": "Chubut",
+        "description": "Mia es una perrita dulce en busca de un hogar amoroso y tranquilo.",
+        "picture": "https://via.placeholder.com/150"
+      }
+    ]
+}
