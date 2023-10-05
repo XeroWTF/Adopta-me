@@ -5,56 +5,56 @@
         "name": "Luna",
         "province": "Buenos Aires",
         "description": "Luna es una encantadora perrita en busca de un hogar amoroso.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/895259/pexels-photo-895259.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
       {
         "id": 2,
         "name": "Max",
         "province": "Córdoba",
         "description": "Max es un alegre gatito en busca de un compañero de juegos.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/126407/pexels-photo-126407.jpeg"
       },
       {
         "id": 3,
         "name": "Bella",
         "province": "Santa Fe",
         "description": "Bella es una perrita muy cariñosa en busca de cariño y atención.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/45170/kittens-cat-cat-puppy-rush-45170.jpeg"
       },
       {
         "id": 4,
         "name": "Simba",
         "province": "Mendoza",
         "description": "Simba es un gato juguetón en busca de un hogar lleno de diversión.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg"
       },
       {
         "id": 5,
         "name": "Rocky",
         "province": "Salta",
         "description": "Rocky es un perrito activo en busca de un dueño activo.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg"
       },
       {
         "id": 6,
         "name": "Lola",
         "province": "Tucumán",
         "description": "Lola es una perrita juguetona en busca de amor y cariño.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/247502/pexels-photo-247502.jpeg"
       },
       {
         "id": 7,
         "name": "Tom",
         "province": "Neuquén",
         "description": "Tom es un gato travieso en busca de un compañero de travesuras.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/7210748/pexels-photo-7210748.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
       },
       {
         "id": 8,
         "name": "Mia",
         "province": "Chubut",
         "description": "Mia es una perrita dulce en busca de un hogar amoroso y tranquilo.",
-        "picture": "https://via.placeholder.com/150"
+        "picture": "https://images.pexels.com/photos/569170/pexels-photo-569170.jpeg"
       }
     ]
 }
