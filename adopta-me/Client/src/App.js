@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch } from "react-router-dom"
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import Home from './Pages/Home';
 import AddForm from './Pages/AddForm';
 import LandingPage from './Pages/LandingPage';

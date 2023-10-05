@@ -2,7 +2,7 @@ import './Home.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect } from 'react';
 import PetCard from '../Components/PetCard';
-import LoginButton from '../Components/LoginButton'; 
+import LoginButton from '../Components/LoginButton';
 import LogoutButton from '../Components/LogoutButton';
 import fakePetData from "../Assets/fakePetData.json";
 
@@ -12,8 +12,8 @@ const Home = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-     // fetchAnimals();
-     setAnimals(fakePetData);
+      // fetchAnimals();
+      setAnimals(fakePetData.petFakeData); 
     }
   }, [isAuthenticated]);
 
@@ -33,7 +33,7 @@ const Home = () => {
         {isAuthenticated && (
           <>
             <LogoutButton />
-            <h1>Adopta un amigo peludo</h1>  
+            <h1>Adopta un amigo peludo</h1>
           </>
         )}
       </header>
@@ -44,10 +44,7 @@ const Home = () => {
             {animals.map((pet) => (
               <PetCard
                 key={pet.id}
-                id={pet.id}
                 name={pet.name}
-                province={pet.province}
-                description={pet.description}
                 picture={pet.picture}
               />
             ))}
