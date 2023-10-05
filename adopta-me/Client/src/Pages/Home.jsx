@@ -12,47 +12,33 @@ const Home = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // fetchAnimals();
-      setAnimals(fakePetData.petFakeData); 
+      setAnimals(fakePetData.petFakeData);
     }
   }, [isAuthenticated]);
-
-  const fetchAnimals = async () => {
-    const res = await fetch('/animals');
-    const data = await res.json();
-    setAnimals(data);
-  };
 
   return (
     <div className="home">
       <header>
-        {!isAuthenticated && (
-          <LoginButton />
-        )}
-
-        {isAuthenticated && (
-          <>
-            <LogoutButton />
-            <h1>Adopta un amigo peludo</h1>
-          </>
-        )}
+        <div className="header-content">
+          <h1>Adopta un amigo peludo</h1>
+          {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        </div>
       </header>
 
-      <main>
+      <main className="main-content">
         {isAuthenticated ? (
-          <div className="pet-cards">
-            {animals.map((pet) => (
-              <PetCard
-                key={pet.id}
-                name={pet.name}
-                picture={pet.picture}
-              />
-            ))}
-          </div>
+          animals.map((pet) => (
+            <PetCard
+              key={pet.id}
+              picture={pet.picture}
+              name={pet.name}
+            />
+          ))
         ) : (
           <p>Necesitas iniciar sesión para ver esta sección</p>
         )}
       </main>
+
       <footer>
         <p>Copyright Adopta-me</p>
       </footer>

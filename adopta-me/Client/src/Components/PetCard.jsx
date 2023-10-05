@@ -1,14 +1,12 @@
-// PetCard.jsx
-
 import './PetCard.css';
 
-function PetCard({name, picture}) {
+function PetCard({ name, picture }) {
   return (
     <div className="pet-card">
       <img src={picture} alt={name} />
-      <h3>{name}</h3>
-      <br />
-      <button>Conocer más</button>
+      <div className="card-content">
+        <h3>{name}</h3>
+      </div>
     </div>
   );
 }
