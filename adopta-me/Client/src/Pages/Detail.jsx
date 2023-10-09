@@ -6,3 +6,5 @@ const Detail = () => {
         <div> Esto es un detalle del animal </div>
     )
 }
+
+export default Detail;
