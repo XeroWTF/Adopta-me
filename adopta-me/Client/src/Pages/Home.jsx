@@ -5,10 +5,12 @@ import PetCard from '../Components/PetCard';
 import LoginButton from '../Components/LoginButton';
 import LogoutButton from '../Components/LogoutButton';
 import fakePetData from "../Assets/fakePetData.json";
+import { useHistory } from 'react-router-dom';
 
 const Home = () => {
   const [animals, setAnimals] = useState([]);
   const { isAuthenticated } = useAuth0();
+  const history = useHistory();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -16,12 +18,21 @@ const Home = () => {
     }
   }, [isAuthenticated]);
 
+  const handleFormButton = () => {
+    history.push('/addForm');
+  };
+
   return (
     <div className="home">
       <header>
         <div className="header-content">
           <h1>Adopta un amigo peludo</h1>
-          {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+          {isAuthenticated ? 
+          <LogoutButton /> :
+           <LoginButton />}
+        </div>
+        <div>
+        <button className="form-button" onClick={handleFormButton}>Publicar Mascota</button>
         </div>
       </header>
 
