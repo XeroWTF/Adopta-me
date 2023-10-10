@@ -6,17 +6,25 @@ import LoginButton from '../Components/LoginButton';
 import LogoutButton from '../Components/LogoutButton';
 import fakePetData from "../Assets/fakePetData.json";
 import { useHistory } from 'react-router-dom';
+import useCheckUser from '../hooks/useCheckUser';
+
 
 const Home = () => {
   const [animals, setAnimals] = useState([]);
   const { isAuthenticated } = useAuth0();
   const history = useHistory();
+ 
 
   useEffect(() => {
+
     if (isAuthenticated) {
       setAnimals(fakePetData.petFakeData);
+
     }
-  }, [isAuthenticated]);
+  
+  }, [isAuthenticated]); 
+
+  useCheckUser();
 
   const handleFormButton = () => {
     history.push('/addForm');
