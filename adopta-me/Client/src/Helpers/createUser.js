@@ -8,7 +8,8 @@ const createUser = async (user) => {
       body: JSON.stringify({
         name: user.name,
         email: user.email,
-        picture: user.picture
+        picture: user.picture,
+        nickname: user.nickname
       })
     });
   
