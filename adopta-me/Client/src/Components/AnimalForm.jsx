@@ -3,6 +3,7 @@
 import "./AnimalForm.css";
 import { useState } from 'react';  
 import { useAuth0 } from '@auth0/auth0-react';
+import getUserId from "../Helpers/getUserId";
 
 function AnimalForm() {
 
@@ -13,22 +14,38 @@ function AnimalForm() {
     description: ''
   });
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('Formulario enviado. Datos:', form);
+
+    const userId = await getUserId(user.email);
+
+    const body = { 
+      ...form,  
+      userId
+    };
+
+    console.log('Contenido del body:', body);
+
     try {
       const token = await getAccessTokenSilently();
 
-      const res = await fetch('http://localhost:3000/animal', {
+      console.log('Enviando solicitud al servidor:', body);
+
+      const res = await fetch('http://localhost:3001/animal', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(form)
+        body: JSON.stringify(body)
+        
       });
+
+      console.log('Respuesta del servidor:', res); 
       
       if (res.ok) {
         alert('Animal creado!');

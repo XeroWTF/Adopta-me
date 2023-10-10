@@ -16,10 +16,10 @@ async function createAnimal(req, res) {
 
   console.log(req.body);
 
-  const { name, picture, province, description } = req.body;  
+  const { name, picture, province, description, userId } = req.body;  
 
   try {
-    const newAnimal = await Animal.create({ name, picture, province, description });
+    const newAnimal = await Animal.create({ name, picture, province, description, userId });
     res.status(201).json(newAnimal);
 
   } catch (error) {
