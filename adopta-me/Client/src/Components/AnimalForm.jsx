@@ -1,39 +1,28 @@
-// AnimalForm.jsx
-
-import "./AnimalForm.css";
-import { useState } from 'react';  
+import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import getUserId from "../Helpers/getUserId";
 
 function AnimalForm() {
-
-  const [form, setForm] = useState({  
-    name: '',
-    picture: '',
-    province: '',
-    description: ''
-  });
-
+  
   const { getAccessTokenSilently, user } = useAuth0();
 
-  const handleSubmit = async (e) => {
+
+  const [form, setForm] = useState({
+    name: '',
+    picture: '', 
+    province: '',
+    description: '',   
+  });
+
+
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log('Formulario enviado. Datos:', form);
-
-    const userId = await getUserId(user.email);
-
-    const body = { 
-      ...form,  
-      userId
-    };
-
-    console.log('Contenido del body:', body);
 
     try {
-      const token = await getAccessTokenSilently();
+      console.log('Submitting form...');
 
-      console.log('Enviando solicitud al servidor:', body);
+      const token = await getAccessTokenSilently();
 
       const res = await fetch('http://localhost:3001/animal', {
         method: 'POST',
@@ -41,59 +30,57 @@ function AnimalForm() {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(body)
-        
+        body: JSON.stringify(form)
       });
 
-      console.log('Respuesta del servidor:', res); 
-      
+      console.log('Response status:', res.status);
+
+      const data = await res.text();
+      console.log('Response text:', data);
+
       if (res.ok) {
-        alert('Animal creado!');
-        setForm({  
-          name: '',
-          picture: '',
-          province: '',
-          description: '' 
-        });
+        try {
+          const newAnimal = await res.json();
+          console.log('Response JSON:', newAnimal);
+        } catch(err) {
+          console.log('Error parsing JSON:', err); 
+        }
+      } else {
+        console.log('Response Error:', res.statusText);
       }
 
-    } catch (err) {
-      console.log(err);
+    } catch(err) {
+      console.log('Error submitting data:', err);
     }
   }
 
-  const handleChange = (e) => {
-    setForm({  
+  function handleChange(e) {
+    setForm({
       ...form,
-      [e.target.name]: e.target.value 
+      [e.target.name]: e.target.value
     });
-  } 
+  }
 
   return (
-
-
     <form onSubmit={handleSubmit}>
-      <input 
-        type="text"
-        name="name"
-        value={form.name}
-        onChange={handleChange} 
-        placeholder="Nombre"
-        />
 
       <input
-        type="text"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+      />
+
+      <input 
         name="picture"
         value={form.picture}
         onChange={handleChange}
-        placeholder="Foto URL"  
       />
-      
-      <select 
+
+      <select
         name="province"
         value={form.province}
-        onChange={handleChange}
-        >
+        onChange={handleChange}  
+      >
         <option value="">Seleccionar provincia</option>
         <option value="Buenos Aires">Buenos Aires</option>
         <option value="Catamarca">Catamarca</option>
@@ -118,20 +105,17 @@ function AnimalForm() {
         <option value="Santiago del Estero">Santiago del Estero</option>
         <option value="Tierra del Fuego">Tierra del Fuego</option>
         <option value="Tucumán">Tucumán</option>
-        
-        
       </select>
 
       <textarea
         name="description"
         value={form.description}
-        onChange={handleChange}
-        placeholder="Descripción"
-        />
+        onChange={handleChange}  
+      />
 
       <button type="submit">Crear Animal</button>
+
     </form>
-      
   );
 
 }

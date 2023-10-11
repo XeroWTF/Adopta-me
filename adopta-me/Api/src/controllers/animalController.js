@@ -3,6 +3,7 @@ const { log } = require('handlebars/runtime');
 const { Animal } = require('../db');
 const { ValidationError } = require('sequelize');
 
+
 async function getAllAnimals(req, res) {
   try {
     const animals = await Animal.findAll();
@@ -15,6 +16,7 @@ async function getAllAnimals(req, res) {
 async function createAnimal(req, res) {
 
   console.log(req.body);
+
 
   const { name, picture, province, description, userId } = req.body;  
 
