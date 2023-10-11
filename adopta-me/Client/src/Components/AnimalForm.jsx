@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function AnimalForm() {
   
   const { getAccessTokenSilently, user } = useAuth0();
-
 
   const [form, setForm] = useState({
     name: '',
@@ -13,16 +12,45 @@ function AnimalForm() {
     description: '',   
   });
 
+  const [userId, setUserId] = useState(null);
 
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await fetch(`http://localhost:3001/user/email/${user.email}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          setUserId(data.id);
+        } else {
+          console.error('Failed to fetch user ID');
+        }
+      } catch (error) {
+        console.error('Error fetching user ID:', error);
+      }
+    };
+
+    if (user) {
+      fetchUserId();
+    }
+  }, [getAccessTokenSilently, user]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-
 
     try {
       console.log('Submitting form...');
 
       const token = await getAccessTokenSilently();
+
+      const body = {
+        ...form,
+        userId,
+      };
 
       const res = await fetch('http://localhost:3001/animal', {
         method: 'POST',
@@ -30,7 +58,7 @@ function AnimalForm() {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(form)
+        body: JSON.stringify(body)
       });
 
       console.log('Response status:', res.status);
