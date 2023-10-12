@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function AnimalForm() {
-  
+
   const { getAccessTokenSilently, user } = useAuth0();
 
   const [form, setForm] = useState({
     name: '',
-    image: '', 
+    image: '',
     province: '',
-    description: '',   
+    description: '',
   });
 
   const [userId, setUserId] = useState(null);
@@ -43,46 +43,43 @@ function AnimalForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+  
     try {
       console.log('Submitting form...');
-
+  
       const token = await getAccessTokenSilently();
-
-      const animal = {
-        ...form,
-        userId,
-      };
-
+  
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('image', form.image);
+      formData.append('province', form.province);
+      formData.append('description', form.description);
+      formData.append('userId', userId);
+  
       const res = await fetch('http://localhost:3001/animal', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(animal)
+        body: formData,
       });
-
-      console.log('Response status:', res.status);
-
-      const data = await res.text();
-      console.log('Response text:', data);
-
+  
+  
       if (res.ok) {
         try {
           const newAnimal = await res.json();
           console.log('Response JSON:', newAnimal);
-        } catch(err) {
-          console.log('Error parsing JSON:', err); 
+        } catch (err) {
+          console.log('Error parsing JSON:', err);
         }
       } else {
         console.log('Response Error:', res.statusText);
       }
-
-    } catch(err) {
+    } catch (err) {
       console.log('Error submitting data:', err);
     }
   }
+  
 
   function handleChange(e) {
     setForm({
@@ -100,17 +97,23 @@ function AnimalForm() {
         onChange={handleChange}
       />
 
-      <input 
-        type='file'
+      <input
+        type="file"
         name="image"
-        value={form.image}
-        onChange={handleChange}
+        onChange={(e) => {
+          const file = e.target.files[0];
+          setForm({
+            ...form,
+            image: file,
+          });
+        }}
       />
+
 
       <select
         name="province"
         value={form.province}
-        onChange={handleChange}  
+        onChange={handleChange}
       >
         <option value="">Seleccionar provincia</option>
         <option value="Buenos Aires">Buenos Aires</option>
@@ -141,7 +144,7 @@ function AnimalForm() {
       <textarea
         name="description"
         value={form.description}
-        onChange={handleChange}  
+        onChange={handleChange}
       />
 
       <button type="submit">Crear Animal</button>

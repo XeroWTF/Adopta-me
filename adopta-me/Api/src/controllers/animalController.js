@@ -4,14 +4,66 @@ const { Animal } = require('../db');
 const { ValidationError } = require('sequelize');
 const cloudinary = require('cloudinary').v2;
 const {
-  CLOUD_NAME, API_KEY, API_SECRET
+  CLOUD_NAME, API_KEY, API_SECRET, CLOUDINARY_URL
 } = process.env;
 
 cloudinary.config({
 cloud_name: `${CLOUD_NAME}`,
 api_key: `${API_KEY}`,
-api_secret: `${API_SECRET}`
+api_secret: `${API_SECRET}`,
+cloudinary_url: `${CLOUDINARY_URL}`
 });
+
+
+async function uploadAnimalImage(req, res) {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image provided' });
+    }
+
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'Animals' // Adjust the folder as needed
+    });
+
+    // Delete the temporary file after upload
+    // fs.unlinkSync(req.file.path);
+
+    return res.json({ imageUrl: result.secure_url });
+  } catch (error) {
+    console.error('Error uploading image to Cloudinary:', error);
+    return res.status(500).json({ error: 'Error uploading image to Cloudinary' });
+  }
+}
+
+
+async function createAnimal(animal) {
+  try {
+    const { name, image, province, description, userId } = animal;
+
+    if (!name || !image || !province || !description || !userId) {
+      throw new Error('Faltan datos obligatorios');
+    }
+
+    const result = await cloudinary.uploader.upload(image.path, {
+      folder: 'Animals'
+    });
+
+    const imageUrl = result.secure_url;
+
+    const newAnimal = await Animal.create({
+      name,
+      image: imageUrl,
+      province,
+      description,
+      userId,
+    });
+
+    return newAnimal;
+  } catch (error) {
+    return { error: error.message };
+  }
+}
+
 
 async function getAllAnimals(req, res) {
   try {
@@ -20,32 +72,6 @@ async function getAllAnimals(req, res) {
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener los animales' }); 
   }
-}
-
-async function createAnimal(animal) {
-
-  try {
-    let { name, image, province, description, userId } = animal;  
-
-    
-    if(!name || !image || !province || !description || !userId)  throw new Error('Faltan datos obligatorios')
-    
-    const response = await cloudinary.uploader.upload(image, { folder: 'Videogames' }, (error) => {
-      if (error) {
-        console.error("Este es el error:",error);
-      }
-    });
-    
-    image=response.secure_url
-    
-    const newAnimal = await Animal.create({ name, picture, province, description, userId });
-
-    return newAnimal;
-
-  } catch (error) {
-    return {error: error.message};
-}
-
 }
 
 async function getAnimalById(req, res) {
@@ -105,5 +131,6 @@ module.exports = {
   createAnimal, 
   getAnimalById,
   updateAnimal,
-  deleteAnimal
+  deleteAnimal,
+  uploadAnimalImage 
 }
