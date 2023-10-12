@@ -7,7 +7,7 @@ function AnimalForm() {
 
   const [form, setForm] = useState({
     name: '',
-    image: '',
+    image: null,
     province: '',
     description: '',
   });
@@ -47,37 +47,42 @@ function AnimalForm() {
     try {
       console.log('Submitting form...');
   
-      const token = await getAccessTokenSilently();
+      const uploadData = new FormData();
+      uploadData.append('image', form.image);
   
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('image', form.image);
-      formData.append('province', form.province);
-      formData.append('description', form.description);
-      formData.append('userId', userId);
-  
-      console.log('Form data:', formData); // Log the form data
-  
-      const res = await fetch('http://localhost:3001/animal', {
+      const uploadRes = await fetch('http://localhost:3001/animal/upload', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
+        body: uploadData
       });
   
-      console.log('Response:', res); // Log the response object
-      
+      const { imageUrl } = await uploadRes.json();
   
-      if (res.ok) {
+      // Create animal
+      const animalData = {
+        name: form.name,
+        image: imageUrl,
+        province: form.province,
+        description: form.description,
+        userId: userId
+      }
+  
+      const createRes = await fetch('/animal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(animalData) 
+      });
+  
+      if (createRes.ok) {
         try {
-          const newAnimal = await res.json();
+          const newAnimal = await createRes.json();
           console.log('Response JSON:', newAnimal);
         } catch (err) {
           console.log('Error parsing JSON:', err);
         }
       } else {
-        console.log('Response Error:', res.statusText);
+        console.log('Response Error:', createRes.statusText);
       }
     } catch (err) {
       console.log('Error submitting data:', err);
