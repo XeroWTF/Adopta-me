@@ -53,12 +53,12 @@ module.exports = (sequelize) => {
 
     description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     
-    picture: {
+    image: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     
     status: {

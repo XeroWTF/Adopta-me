@@ -7,12 +7,14 @@ function AnimalForm() {
 
   const [form, setForm] = useState({
     name: '',
-    picture: '', 
+    image: '', 
     province: '',
     description: '',   
   });
 
   const [userId, setUserId] = useState(null);
+
+
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -47,7 +49,7 @@ function AnimalForm() {
 
       const token = await getAccessTokenSilently();
 
-      const body = {
+      const animal = {
         ...form,
         userId,
       };
@@ -58,7 +60,7 @@ function AnimalForm() {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(animal)
       });
 
       console.log('Response status:', res.status);
@@ -99,8 +101,9 @@ function AnimalForm() {
       />
 
       <input 
-        name="picture"
-        value={form.picture}
+        type='file'
+        name="image"
+        value={form.image}
         onChange={handleChange}
       />
 

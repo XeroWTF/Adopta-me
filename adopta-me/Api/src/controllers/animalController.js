@@ -2,7 +2,16 @@
 const { log } = require('handlebars/runtime');
 const { Animal } = require('../db');
 const { ValidationError } = require('sequelize');
+const cloudinary = require('cloudinary').v2;
+const {
+  CLOUD_NAME, API_KEY, API_SECRET
+} = process.env;
 
+cloudinary.config({
+cloud_name: `${CLOUD_NAME}`,
+api_key: `${API_KEY}`,
+api_secret: `${API_SECRET}`
+});
 
 async function getAllAnimals(req, res) {
   try {
@@ -13,26 +22,29 @@ async function getAllAnimals(req, res) {
   }
 }
 
-async function createAnimal(req, res) {
-
-  console.log(req.body);
-
-
-  const { name, picture, province, description, userId } = req.body;  
+async function createAnimal(animal) {
 
   try {
+    let { name, image, province, description, userId } = animal;  
+
+    
+    if(!name || !image || !province || !description || !userId)  throw new Error('Faltan datos obligatorios')
+    
+    const response = await cloudinary.uploader.upload(image, { folder: 'Videogames' }, (error) => {
+      if (error) {
+        console.error("Este es el error:",error);
+      }
+    });
+    
+    image=response.secure_url
+    
     const newAnimal = await Animal.create({ name, picture, province, description, userId });
-    res.status(201).json(newAnimal);
+
+    return newAnimal;
 
   } catch (error) {
-
-    if (error instanceof ValidationError) {
-      return res.status(400).json({ message: error.message });
-    }
-
-    res.status(500).json({ message: 'Error al crear el animal' });
-  
-  }
+    return {error: error.message};
+}
 
 }
 
