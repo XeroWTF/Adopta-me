@@ -36,35 +36,31 @@ async function uploadAnimalImage(req, res) {
 }
 
 
-async function createAnimal(animal) {
+const createAnimal = async (req, res) => {
 
-  
+  const { name, image, province, description, userId } = req.body;
+
+  if(!image) {
+    return res.status(400).send('No image provided');
+  }
+
   try {
-    console.log("me empiezo a ejecutar:", animal.body)
-    const { name, image, province, description, userId } = animal;
-
-    if (!name || !image || !province || !description || !userId) {
-      throw new Error('Faltan datos obligatorios');
-    }
-
-    const result = await cloudinary.uploader.upload(image.path, {
-      folder: 'Animals'
-    });
-
-    const imageUrl = result.secure_url;
 
     const newAnimal = await Animal.create({
       name,
-      image: imageUrl,
+      image,
       province,
       description,
-      userId,
+      userId
     });
+    
+    res.status(201).json(newAnimal);
 
-    return newAnimal;
-  } catch (error) {
-    return { error: error.message };
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error creating animal');
   }
+
 }
 
 

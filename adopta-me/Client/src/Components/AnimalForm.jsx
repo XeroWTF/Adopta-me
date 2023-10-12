@@ -66,7 +66,7 @@ function AnimalForm() {
         userId: userId
       }
   
-      const createRes = await fetch('/animal', {
+      const createRes = await fetch('http://localhost:3001/animal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
