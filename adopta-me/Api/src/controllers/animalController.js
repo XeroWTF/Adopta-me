@@ -37,7 +37,10 @@ async function uploadAnimalImage(req, res) {
 
 
 async function createAnimal(animal) {
+
+  
   try {
+    console.log("me empiezo a ejecutar:", animal.body)
     const { name, image, province, description, userId } = animal;
 
     if (!name || !image || !province || !description || !userId) {

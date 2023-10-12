@@ -56,6 +56,8 @@ function AnimalForm() {
       formData.append('description', form.description);
       formData.append('userId', userId);
   
+      console.log('Form data:', formData); // Log the form data
+  
       const res = await fetch('http://localhost:3001/animal', {
         method: 'POST',
         headers: {
@@ -64,6 +66,8 @@ function AnimalForm() {
         body: formData,
       });
   
+      console.log('Response:', res); // Log the response object
+      
   
       if (res.ok) {
         try {
@@ -89,7 +93,7 @@ function AnimalForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} action="/upload" method="post" enctype="multipart/form-data">
 
       <input
         name="name"
@@ -106,6 +110,7 @@ function AnimalForm() {
             ...form,
             image: file,
           });
+          console.log("contenido de file:", file)
         }}
       />
 
